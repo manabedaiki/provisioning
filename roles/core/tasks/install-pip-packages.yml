@@ -1,0 +1,9 @@
+---
+- name: install pip packages
+  become: "{{ become_when_installing_package }}"
+  pip:
+    name: "{{ item }}"
+    executable: "{{ which_pip }}"
+    extra_args: --no-cache-dir
+  with_items:
+    - pygments

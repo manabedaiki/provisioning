@@ -1,0 +1,17 @@
+HashKnownHosts no
+
+Host *.local
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    LogLevel ERROR
+
+{% if ssh_config %}
+{% for item in ssh_config %}
+
+Host {{ item.host }}
+    HostName {{ item.hostname }}
+    User {{ item.user }}
+    Port {{ item.port }}
+    IdentityFile {{ item.identityfile }}
+{% endfor %}
+{% endif %}

@@ -1,0 +1,25 @@
+---
+- name: install dotfiles
+  copy:
+    src: "dotfiles/{{ item.name | default(item) }}"
+    dest: "{{ ansible_env.HOME }}/{{ item.dest | default(item) }}"
+    mode: 0400
+  with_items:
+    - .aliases
+    - .bash_profile
+    - .bashrc
+    - .environment
+    - .gitconfig
+    - .tmux.conf
+    - .vimrc
+    - .zshenv
+    - .zshrc
+    - { name: .vim, dest: '' }
+
+- name: delete unnecessary files
+  file:
+    path: "{{ ansible_env.HOME }}/{{ item }}"
+    state: absent
+  with_items:
+    - .profile
+    - .bash_logout

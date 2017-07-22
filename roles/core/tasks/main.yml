@@ -1,0 +1,15 @@
+---
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- include: install-pip.yml
+
+- include: install-ansible.yml
+  when: install_ansible
+
+- include: install-docker.yml
+  when:
+    - install_docker
+    - ansible_os_family == 'Debian'
+
+- include: install-packages.yml
+- include: install-pip-packages.yml

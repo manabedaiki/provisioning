@@ -1,0 +1,27 @@
+---
+- name: create ~/.ssh/authorized_keys
+  copy:
+    src: "~/.ssh/{{ ssh_authorized_keys }}.pub"
+    dest: "{{ ansible_env.HOME }}/.ssh/authorized_keys"
+    mode: 0400
+
+- name: change listen port
+  become: yes
+  lineinfile:
+    name: /etc/ssh/sshd_config
+    regexp: '^#?Port \d+'
+    line: "Port {{ ssh_port }}"
+
+- name: deny root login
+  become: yes
+  lineinfile:
+    name: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin '
+    line: "PermitRootLogin no"
+
+- name: deny password authentication
+  become: yes
+  lineinfile:
+    name: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication '
+    line: "PasswordAuthentication no"

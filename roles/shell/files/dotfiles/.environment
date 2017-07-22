@@ -1,0 +1,30 @@
+# general
+export LANG=en_US.UTF-8
+export LESS='-R'
+export LESSCHARSET=utf-8
+export TERM=xterm-256color
+
+# powerline
+case "$OSTYPE" in
+darwin*)
+    if [ -d /usr/local/lib/python2.7/site-packages/powerline ]; then
+        export POWERLINE_HOME=/usr/local/lib/python2.7/site-packages/powerline
+    fi
+    ;;
+linux*)
+    if [ -d /usr/local/lib/python2.7/dist-packages/powerline ]; then
+        export POWERLINE_HOME=/usr/local/lib/python2.7/dist-packages/powerline
+    fi
+    ;;
+esac
+
+# go
+if [ -d ~/dev ]; then
+    export GOPATH=~/dev
+    export PATH=$GOPATH/bin:$PATH
+fi
+
+# load user configuration
+if [ -f ~/.local/.environment ]; then
+    . ~/.local/.environment
+fi

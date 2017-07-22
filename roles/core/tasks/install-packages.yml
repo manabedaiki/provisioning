@@ -1,0 +1,15 @@
+---
+- name: install core packages
+  become: "{{ become_when_installing_package }}"
+  package:
+    name: "{{ item }}"
+  with_items:
+    - curl
+    - gawk
+    - git
+    - jq
+    - rsync
+    - tmux
+    - tree
+    - vim
+    - wget

@@ -1,0 +1,11 @@
+---
+- name: clean home
+  file:
+    path: "{{ ansible_env.HOME }}/{{ item }}"
+    state: absent
+  with_items:
+    - .cache
+    - .lesshst
+    - .sudo_as_admin_successful
+    - .viminfo
+    - .zcompdump

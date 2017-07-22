@@ -1,0 +1,11 @@
+---
+- name: apt-get update
+  become: yes
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: apt-get dist-upgrade
+  become: yes
+  apt:
+    upgrade: dist

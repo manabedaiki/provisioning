@@ -1,0 +1,11 @@
+---
+- name: install tools
+  become: yes
+  copy:
+    src: "bin/{{ item }}"
+    dest: /usr/local/bin
+    mode: 0555
+  with_items:
+    - argparse
+    - git-foreach
+    - preview

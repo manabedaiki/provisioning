@@ -1,0 +1,26 @@
+---
+- name: download fonts
+  git:
+    repo: "https://github.com/{{ item }}.git"
+    dest: "{{ ansible_env.HOME }}/dev/src/github.com/{{ item }}"
+  with_items:
+    - edihbrandon/RictyDiminished
+    - tonsky/FiraCode
+  when: ansible_os_family == 'Darwin'
+
+- name: install fonts
+  file:
+    src: "{{ ansible_env.HOME }}/dev/src/github.com/{{ item.directory }}/{{ item.name }}"
+    dest: "{{ ansible_env.HOME }}/Library/Fonts/{{ item.name }}"
+    state: link
+  with_items:
+    - { directory: tonsky/FiraCode/distr/ttf, name: FiraCode-Bold.ttf }
+    - { directory: tonsky/FiraCode/distr/ttf, name: FiraCode-Light.ttf }
+    - { directory: tonsky/FiraCode/distr/ttf, name: FiraCode-Medium.ttf }
+    - { directory: tonsky/FiraCode/distr/ttf, name: FiraCode-Regular.ttf }
+    - { directory: tonsky/FiraCode/distr/ttf, name: FiraCode-Retina.ttf }
+    - { directory: edihbrandon/RictyDiminished, name: RictyDiminished-Bold.ttf }
+    - { directory: edihbrandon/RictyDiminished, name: RictyDiminished-BoldOblique.ttf }
+    - { directory: edihbrandon/RictyDiminished, name: RictyDiminished-Oblique.ttf }
+    - { directory: edihbrandon/RictyDiminished, name: RictyDiminished-Regular.ttf }
+  when: ansible_os_family == 'Darwin'

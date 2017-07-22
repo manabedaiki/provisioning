@@ -1,0 +1,5 @@
+---
+- name: install go
+  become: "{{ become_when_installing_package }}"
+  package:
+    name: "{{ go_package_name }}"

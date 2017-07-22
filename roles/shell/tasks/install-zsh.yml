@@ -1,0 +1,17 @@
+---
+- name: install zsh
+  become: "{{ become_when_installing_package }}"
+  package:
+    name: zsh
+
+- name: change login shell to zsh
+  become: yes
+  user:
+    name: "{{ ansible_env.USER }}"
+    shell: "{{ which_zsh }}"
+
+- name: install zplug
+  git:
+    repo: https://github.com/zplug/zplug.git
+    dest: "{{ ansible_env.HOME }}/.zplug"
+    version: "{{ zplug_version }}"

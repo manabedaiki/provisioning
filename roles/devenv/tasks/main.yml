@@ -1,0 +1,11 @@
+---
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- include: fonts.yml
+  when: install_fonts
+
+- include: go.yml
+  when: install_go
+
+- include: python.yml
+  when: install_python

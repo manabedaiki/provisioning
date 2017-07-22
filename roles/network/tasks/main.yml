@@ -1,0 +1,9 @@
+---
+- name: create ~/.ssh
+  file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: 0700
+
+- include: ssh-client.yml
+- include: ssh-server.yml

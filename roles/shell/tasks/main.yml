@@ -1,0 +1,14 @@
+---
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- include: install-powerline.yml
+  when: install_powerline
+
+- include: install-zsh.yml
+  when: install_zsh
+
+- include: install-tpm.yml
+
+- include: install-dotfiles.yml
+
+- include: install-tools.yml

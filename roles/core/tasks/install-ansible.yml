@@ -1,0 +1,5 @@
+---
+- name: install ansible
+  become: "{{ become_when_installing_package }}"
+  package:
+    name: ansible

@@ -1,0 +1,25 @@
+---
+- name: install powerline-status
+  become: "{{ become_when_installing_package }}"
+  pip:
+    name: powerline-status
+    executable: "{{ which_pip }}"
+    extra_args: --no-cache-dir
+
+- name: download powerline fonts
+  git:
+    repo: https://github.com/powerline/fonts.git
+    dest: "{{ ansible_env.HOME }}/dev/src/github.com/powerline/fonts"
+  when: ansible_os_family == 'Darwin'
+
+- name: install powerline fonts
+  file:
+    src: "{{ ansible_env.HOME }}/dev/src/github.com/powerline/fonts/AnonymousPro/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/Library/Fonts/{{ item }}"
+    state: link
+  with_items:
+    - Anonymice Powerline Bold Italic.ttf
+    - Anonymice Powerline Bold.ttf
+    - Anonymice Powerline Italic.ttf
+    - Anonymice Powerline.ttf
+  when: ansible_os_family == 'Darwin'

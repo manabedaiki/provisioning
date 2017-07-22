@@ -1,0 +1,94 @@
+#!/bin/bash
+
+set -e
+set -u
+
+ARGPARSE_DESCRIPTION='execute command for each git repositories'
+ARGPARSE_OPTS=(
+    '_ g git+ -- execute git command for each git repositories'
+    'e exec+ -- execute shell command for each git repositories'
+    'C home: -- home (default: ~/dev/src)'
+    'l list? -- list git repositories'
+    'f fqdn: -- filter by FQDN'
+    'u user: -- filter by user'
+    'n name: -- filter by name'
+    'h help? -- display this help and exit'
+)
+ARGPARSE_EXAMPLES=(
+    'git-foreach fetch origin'
+    'git-foreach --git fetch origin'
+    'git-foreach --exec git fetch origin'
+    'git-foreach --exec pwd'
+    'git-foreach --list'
+    'git-foreach --list | fzf'
+    'git-foreach --list --fqdn github.com'
+    'git-foreach --list --user manabedaiki'
+)
+ARGPARSE_AGGRESSIVE_EAT=1
+source "$(dirname "$0")/argparse"
+
+opt_home=${opt_home:-$HOME/dev/src}
+
+function execute_command()
+{
+    local _line
+    
+    while IFS=$'\n' read -r _line
+    do
+        echo -e "  \033[90m> $_line\033[0m"
+    done < <("$@" 2>&1)
+}
+
+function subcommand_git()
+{
+    while IFS=$'\n' read -r _repo
+    do
+        echo -e "\033[1;96m$ git -C $opt_home/$_repo ${opt_git[*]}\033[0;0m"
+        execute_command git -C "$opt_home/$_repo" "${opt_git[@]}"
+    done < <(subcommand_list)
+}
+
+function subcommand_exec()
+{
+    while IFS=$'\n' read -r _repo
+    do
+        echo -e "\033[96m$_repo\033[0m"
+        (cd "$opt_home/$_repo" && execute_command "${opt_exec[@]}")
+    done < <(subcommand_list)
+}
+
+function subcommand_list()
+{
+    local _git
+    local _fqdn
+    local _user
+    local _name
+    while IFS= read -d '' -r _git
+    do
+        _git=${_git%/.git}
+        _name=${_git##*/}
+        _git=${_git%/*}
+        _user=${_git##*/}
+        _git=${_git%/*}
+        _fqdn=${_git##*/}
+        [ ! -z "${opt_fqdn:-}" ] && [ "$_fqdn" != "${opt_fqdn:-}" ] && continue
+        [ ! -z "${opt_user:-}" ] && [ "$_user" != "${opt_user:-}" ] && continue
+        [ ! -z "${opt_name:-}" ] && [ "$_name" != "${opt_name:-}" ] && continue
+        echo "$_fqdn/$_user/$_name"
+    done < <(find "$opt_home" -mindepth 4 -maxdepth 4 -type d -name .git -print0)
+}
+
+if [ ! -z "${opt_git:-}" ]; then
+    subcommand_git
+    exit $?
+fi
+
+if [ ! -z "${opt_exec:-}" ]; then
+    subcommand_exec
+    exit $?
+fi
+
+if ((opt_list == 1)); then
+    subcommand_list
+    exit $?
+fi
