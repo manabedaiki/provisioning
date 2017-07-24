@@ -36,7 +36,7 @@ function git-working-tree()
     local _output
     local _query
     while _output=$(
-        git status --short --branch --null --untracked-files=all --ignore-submodules=all \
+        git status --short --branch --untracked-files=all --ignore-submodules=all \
         | fzf \
             --no-sort \
             --multi \
@@ -47,8 +47,7 @@ function git-working-tree()
             --preview="git diff --color=always -- \"\$(sed 's/^...//' <<<"{}")\" | head -n $((LINES - 2))" \
             --query="${_query:-}" \
             --print-query \
-            --expect=ctrl-s,ctrl-u,ctrl-d,enter \
-            --read0)
+            --expect=ctrl-s,ctrl-u,ctrl-d,enter)
     do
         _query=$(head -n 1 <<<"$_output")
         _key=$(head -n 2 <<<"$_output" | tail -n 1)
