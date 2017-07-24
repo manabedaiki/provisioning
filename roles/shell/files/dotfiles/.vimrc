@@ -45,6 +45,9 @@ set showcmd
 " Better commandline completion
 set wildmenu
 
+" Don't create .viminfo
+set viminfo=
+
 " Indentation settings for using 4 spaces instead of tabs.
 set smartindent
 set shiftwidth=4
