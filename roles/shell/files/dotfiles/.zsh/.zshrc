@@ -37,6 +37,8 @@ zplug load
 . ~/.aliases
 
 # key binding
+autoload -Uz explore
+autoload -Uz search-history
 zle -N git-history
 zle -N git-working-tree
 zle -N explore
