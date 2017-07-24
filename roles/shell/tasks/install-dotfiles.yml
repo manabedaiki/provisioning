@@ -13,7 +13,7 @@
     - .tmux.conf
     - .vimrc
     - .zshenv
-    - .zshrc
+    - { name: .zsh, dest: '' }
     - { name: .vim, dest: '' }
 
 - name: delete unnecessary files
