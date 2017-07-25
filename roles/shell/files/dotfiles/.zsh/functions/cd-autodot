@@ -1,0 +1,4 @@
+if [[ "$LBUFFER[-2,-1]" == '..' ]]; then
+    LBUFFER="$LBUFFER/."
+fi
+zle self-insert
