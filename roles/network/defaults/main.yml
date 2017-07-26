@@ -1,4 +1,5 @@
 ---
+ssh_expose: yes
 ssh_port: 22
 ssh_keys: []
 ssh_authorized_keys:

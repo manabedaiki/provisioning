@@ -6,4 +6,6 @@
     mode: 0700
 
 - include: ssh-client.yml
+
 - include: ssh-server.yml
+  when: ssh_expose
