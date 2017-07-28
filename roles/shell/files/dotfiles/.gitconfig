@@ -11,3 +11,5 @@
     editor = vi
     pager = less -x4
     quotepath = false
+[diff "sjis"]
+    textconv = iconv -f sjis
