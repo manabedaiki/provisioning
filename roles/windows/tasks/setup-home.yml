@@ -1,0 +1,27 @@
+---
+- name: create ~
+  win_file:
+    path: "{{ ansible_env.HOME }}"
+    state: directory
+
+- name: chown ~
+  win_acl:
+    user: "{{ ansible_env.USER }}"
+    path: "{{ ansible_env.HOME }}"
+    rights: FullControl
+    type: allow
+
+- name: register HOME environment variable
+  win_environment:
+    level: user
+    name: HOME
+    value: "{{ ansible_env.HOME }}"
+
+- name: create ~/dev
+  win_file:
+    path: "{{ ansible_env.HOME }}\\{{ item }}"
+    state: directory
+  with_items:
+    - dev
+    - dev\\bin
+    - dev\\src

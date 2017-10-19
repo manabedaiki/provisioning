@@ -3,3 +3,10 @@
   become: "{{ become_when_installing_package }}"
   package:
     name: ansible
+
+- name: install pywinrm
+  become: "{{ become_when_installing_package }}"
+  pip:
+    name: pywinrm
+    executable: "{{ which_pip }}"
+    extra_args: --no-cache-dir

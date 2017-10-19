@@ -1,0 +1,4 @@
+---
+- include: setup-home.yml
+
+- include: role-shell.yml
