@@ -1,4 +1,5 @@
 ---
+install_drone: no
 install_fonts: no
 install_go: no
 install_python: no
