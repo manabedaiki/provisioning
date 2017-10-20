@@ -1,0 +1,11 @@
+version: '2'
+services:
+  dropbox:
+    image: janeczku/dropbox:latest
+    restart: always
+    volumes:
+      - $DROPBOX_CONFIGURATION:/dbox/.dropbox
+      - $DROPBOX_MOUNTPOINT:/dbox/Dropbox
+    environment:
+      DBOX_UID: '$DROPBOX_UID'
+      DBOX_GID: '$DROPBOX_GID'

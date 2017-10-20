@@ -7,4 +7,5 @@
     - network
     - shell
     - devenv
+    - service
     - housekeep

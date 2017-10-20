@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker container exec -it dropbox_dropbox_1 dropbox "$@"

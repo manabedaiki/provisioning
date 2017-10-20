@@ -1,0 +1,6 @@
+---
+install_dropbox: no
+dropbox_configuration: /tmp/.dropbox
+dropbox_mountpoint: /tmp/dropbox
+dropbox_uid: 1000
+dropbox_gid: 1000
