@@ -15,7 +15,7 @@
     src: "{{ item.name }}"
     dest: /usr/local/lib/provisioning-service
   with_items:
-    - { name: 'dropbox', when: install_dropbox }
+    - { name: 'dropbox', when: "{{ install_dropbox }}" }
   when: item.when
 
 - name: install templates
@@ -23,5 +23,5 @@
     src: "{{ item.name }}.j2"
     dest: "/usr/local/lib/provisioning-service/{{ item.name }}"
   with_items:
-    - { name: 'dropbox/.env', when: install_dropbox }
+    - { name: 'dropbox/.env', when: "{{ install_dropbox }}" }
   when: item.when
