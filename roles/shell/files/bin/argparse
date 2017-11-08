@@ -130,10 +130,16 @@ function argparse_set_state()
             '*')
                 argparse_state_completed=1
                 eval "opt_$argparse_state_keyword=()"
+                if ((ARGPARSE_AGGRESSIVE_EAT != 0)); then
+                    argparse_state_eat=1
+                fi
                 ;;
             '+')
                 argparse_state_completed=0
                 eval "opt_$argparse_state_keyword=()"
+                if ((ARGPARSE_AGGRESSIVE_EAT != 0)); then
+                    argparse_state_eat=1
+                fi
                 ;;
             esac
             
@@ -178,19 +184,6 @@ function argparse_next_rest()
     else
         return 1
     fi
-    
-    case "$argparse_state_nargs" in
-    '?')
-        ;;
-    ':')
-        ;;
-    '*')
-        argparse_state_eat=1
-        ;;
-    '+')
-        argparse_state_eat=1
-        ;;
-    esac
 }
 
 # Verify whether the option satisfies the value.
