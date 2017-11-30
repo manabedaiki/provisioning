@@ -39,6 +39,7 @@ zplug load
 # key binding
 autoload -Uz cd-autodot
 autoload -Uz cd-up
+autoload -Uz docker-dashboard
 autoload -Uz explore
 autoload -Uz search-history
 autoload -Uz edit-command-line
@@ -46,6 +47,7 @@ zle -N git-history
 zle -N git-working-tree
 zle -N cd-autodot
 zle -N cd-up
+zle -N docker-dashboard
 zle -N explore
 zle -N explore-github
 zle -N search-history
@@ -54,6 +56,7 @@ bindkey '^g^g' git-history
 bindkey '^g^w' git-working-tree
 bindkey '.' cd-autodot
 bindkey '^^' cd-up
+bindkey '^e^v' docker-dashboard
 bindkey '^e^e' explore
 bindkey '^e^g' explore-github
 bindkey '^r' search-history

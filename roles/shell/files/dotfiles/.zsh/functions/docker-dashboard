@@ -1,0 +1,36 @@
+function _input()
+{
+    {
+        echo $' \tID\tIMAGE\tNAME'
+        docker container ls --all --format $'C\t{{.ID}}\t{{.Image}}\t{{.Names}}'
+    } | column -ts $'\t'
+    echo
+
+    {
+        echo $' \tID\tNAME'
+        docker image ls --format $'I\t{{.ID}}\t{{.Repository}}:{{.Tag}}' | sort -k 3
+    } | column -ts $'\t'
+    echo
+
+    {
+        echo $' \tNAME'
+        docker volume ls --format $'V\t{{.Name}}'
+    } | column -ts $'\t'
+}
+
+local _output
+local _query
+
+while _output=$(
+        _input \
+        | fzf \
+            --no-sort \
+            --no-mouse \
+            --reverse \
+            --ansi \
+            --query="${_query:-}" \
+            --print-query \
+            --expect=enter)
+do
+    :
+done
