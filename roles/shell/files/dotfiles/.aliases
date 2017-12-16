@@ -94,5 +94,5 @@ alias ll='ls -alF'
 # explore
 function explore-github()
 {
-    PWD=$HOME/dev/src/github.com explore
+    PWD=$HOME/dev/src explore
 }
