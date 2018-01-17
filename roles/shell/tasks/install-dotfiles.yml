@@ -8,6 +8,7 @@
     - .aliases
     - .bash_profile
     - .bashrc
+    - .editorconfig
     - .environment
     - .gitconfig
     - .tmux.conf
