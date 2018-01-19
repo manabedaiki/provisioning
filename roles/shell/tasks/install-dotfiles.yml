@@ -14,6 +14,7 @@
     - .tmux.conf
     - .vimrc
     - .zshenv
+    - { name: .config, dest: '' }
     - { name: .zsh, dest: '' }
     - { name: .vim, dest: '' }
 
