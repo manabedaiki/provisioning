@@ -2,7 +2,7 @@ HashKnownHosts no
 
 Host *
     PermitLocalCommand yes
-    LocalCommand bash -c 'which tmux >/dev/null 2>&1 && tmux rename-window %n || true'
+    LocalCommand bash -c 'tty --silent && which tmux >/dev/null 2>&1 && tmux rename-window %n || true'
 
 Host *.local
     StrictHostKeyChecking no
