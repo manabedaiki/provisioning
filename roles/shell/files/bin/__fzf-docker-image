@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+set -u
+
+{
+    echo $'ID\tREPOSITORY\tTAG\tCREATED\tSIZE'
+    docker image ls --format=$'{{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.CreatedSince}}\t{{.Size}}'
+} | column -ts $'\t' | fzf \
+    --no-sort \
+    --reverse \
+    --header-lines=1 \
+    --ansi \
+    --bind="\
+enter:execute(docker image inspect \$(cut -d ' ' -f 1 <<<{}) | jq -C . | less),\
+ctrl-d:execute-silent(docker image rm \$(cut -d ' ' -f 1 <<<{}))"

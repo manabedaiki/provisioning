@@ -16,60 +16,57 @@ function git-history()
     if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         return 1
     fi
-    
-    local _output _query
-    while _output=$(
-        git graph "$@" \
-        | fzf \
-            --no-sort \
-            --no-mouse \
-            --reverse \
-            --ansi \
-            --query="${_query:-}" \
-            --preview="grep -qE ' [0-9a-f]+' <<<{} && git show --color=always \$(sed 's/^[* |\]*\([0-9a-f]*\).*/\1/' <<<{}) | head -n $((LINES - 2))" \
-            --print-query \
-            --expect=enter)
-    do
-        _query=$(head -1 <<<"$_output")
-        git show --color=always "$(tail -n +3 <<<"$_output" | sed 's/^[* |\]*\([0-9a-f]*\).*/\1/')"
-    done
+    git log --graph --color --all --date-order --decorate --oneline | fzf \
+        --no-sort \
+        --reverse \
+        --ansi \
+        --preview="grep -qE ' [0-9a-f]+' <<<{} && git show --color=always \$(sed 's/^[* |\]*\([0-9a-f]*\).*/\1/' <<<{}) | head -n $((LINES - 2))" \
+        --bind="enter:execute(grep -qE ' [0-9a-f]+' <<<{} && git show --color=always \$(sed 's/^[* |\]*\([0-9a-f]*\).*/\1/' <<<{}))"
 }
 
 function git-working-tree()
 {
-    local _output
-    local _query
-    while _output=$(
-        git status --short --branch --untracked-files=all --ignore-submodules=all \
-        | fzf \
-            --no-sort \
-            --multi \
-            --no-mouse \
-            --reverse \
-            --header-lines=1 \
-            --ansi \
-            --preview="git diff --color=always -- \"\$(sed 's/^...//' <<<"{}")\" | head -n $((LINES - 2))" \
-            --query="${_query:-}" \
-            --print-query \
-            --expect=ctrl-s,ctrl-u,ctrl-d,enter)
-    do
-        _query=$(head -n 1 <<<"$_output")
-        _key=$(head -n 2 <<<"$_output" | tail -n 1)
-        case "$_key" in
-            ctrl-s)
-                git add -- $(tail -n +3 <<<"$_output" | sed 's/^...//') >/dev/null
-                ;;
-            ctrl-u)
-                git reset -- $(tail -n +3 <<<"$_output" | sed 's/^...//') >/dev/null
-                ;;
-            ctrl-d)
-                git diff -- $(tail -n +3 <<<"$_output" | sed 's/^...//') | less
-                ;;
-            enter)
-                return
-                ;;
-        esac
-    done
+    git status --short --branch --untracked-files=all --ignore-submodules=all | fzf \
+        --no-sort \
+        --reverse \
+        --header-lines=1 \
+        --ansi \
+        --preview="git diff --color=always -- \"\$(sed 's/^...//' <<<{})\" | head -n $((LINES - 2))" \
+        --bind="\
+ctrl-s:execute-silent(git add -- \$(sed 's/^...//' <<<{})),\
+ctrl-u:execute-silent(git reset -- \$(sed 's/^...//' <<<{})),\
+ctrl-d:execute(git diff --color=always -- \$(sed 's/^...//' <<<{})),\
+enter:abort"
+}
+
+# docker
+function docker-dashboard()
+{
+    {
+        echo 'DOCKER OVERVIEW'
+        echo "- $(docker container ls --all | tail -n +2 | wc -l) containers"
+        echo "- $(docker image ls | tail -n +2 | wc -l) images"
+        echo "- $(docker volume ls | tail -n +2 | wc -l) volumes"
+    } | fzf \
+        --no-sort \
+        --reverse \
+        --header-lines=1 \
+        --preview="
+            case {} in
+                *containers) docker container ls --all ;;
+                *images)     docker image ls ;;
+                *volumes)    docker volume ls ;;
+            esac
+        " \
+        --preview-window=bottom:80% \
+        --bind="\
+enter:execute(
+    case {} in
+        *containers) __fzf-docker-container ;;
+        *images)     __fzf-docker-image ;;
+        *volumes)    __fzf-docker-volume ;;
+    esac
+)"
 }
 
 # grep
