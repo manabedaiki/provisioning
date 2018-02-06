@@ -32,11 +32,11 @@ function git-working-tree()
         --header-lines=1 \
         --ansi \
         --preview="git diff --color=always -- \"\$(sed 's/^...//' <<<{})\" | head -n $((LINES - 2))" \
-        --bind="\
-ctrl-s:execute-silent(git add -- \$(sed 's/^...//' <<<{})),\
-ctrl-u:execute-silent(git reset -- \$(sed 's/^...//' <<<{})),\
-ctrl-d:execute(git diff --color=always -- \$(sed 's/^...//' <<<{})),\
-enter:abort"
+        --bind="ctrl-s:execute-silent(git add -- \$(sed 's/^...//' <<<{}))" \
+        --bind="ctrl-u:execute-silent(git reset -- \$(sed 's/^...//' <<<{}))" \
+        --bind="ctrl-r:execute-silent(git checkout HEAD -- \$(sed 's/^...//' <<<{}))" \
+        --bind="ctrl-d:execute(git diff --color=always -- \$(sed 's/^...//' <<<{}))" \
+        --bind="enter:abort"
 }
 
 # docker
