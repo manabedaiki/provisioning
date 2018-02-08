@@ -93,3 +93,6 @@ function explore-github()
 {
     PWD=$HOME/dev/src explore
 }
+
+# ssh
+alias ssh-silent='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR'
