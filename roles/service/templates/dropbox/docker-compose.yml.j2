@@ -1,0 +1,14 @@
+version: '2'
+services:
+  {%- for account in dropbox %}
+
+  {{ account.name }}:
+    image: janeczku/dropbox:latest
+    restart: always
+    volumes:
+      - {{ account.configuration }}:/dbox/.dropbox
+      - {{ account.mountpoint }}:/dbox/Dropbox
+    environment:
+      DBOX_UID: '{{ account.uid }}'
+      DBOX_GID: '{{ account.gid }}'
+  {%- endfor -%}
