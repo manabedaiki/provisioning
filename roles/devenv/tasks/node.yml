@@ -1,0 +1,11 @@
+---
+- name: install nodebrew
+  homebrew:
+    name: nodebrew
+  when: ansible_os_family == 'Darwin'
+
+- name: install nvm
+  git:
+    repo: https://github.com/creationix/nvm.git
+    dest: "{{ ansible_env.HOME }}/.nvm"
+  when: ansible_os_family == 'Debian'

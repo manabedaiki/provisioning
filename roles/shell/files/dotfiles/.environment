@@ -24,6 +24,13 @@ if [ -d ~/dev ]; then
     export PATH=$GOPATH/bin:$PATH
 fi
 
+# node
+if [ -d ~/.nodebrew/current/bin ]; then
+    export PATH=$PATH:~/.nodebrew/current/bin
+elif [ -f ~/.nvm/nvm.sh ]; then
+    . ~/.nvm/nvm.sh
+fi
+
 # load user configuration
 if [ -f ~/.local/.environment ]; then
     . ~/.local/.environment

@@ -10,5 +10,8 @@
 - include: go.yml
   when: install_go
 
+- include: node.yml
+  when: install_node
+
 - include: python.yml
   when: install_python
