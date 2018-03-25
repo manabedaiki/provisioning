@@ -1,3 +1,2 @@
 ---
 become_when_installing_package: yes
-which_pip: /usr/bin/pip
