@@ -4,8 +4,12 @@
   apt:
     update_cache: yes
     cache_valid_time: 3600
+  tags:
+    - update
 
 - name: apt-get dist-upgrade
   become: yes
   apt:
     upgrade: dist
+  tags:
+    - update

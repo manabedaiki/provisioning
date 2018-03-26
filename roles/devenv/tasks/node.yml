@@ -9,3 +9,5 @@
     repo: https://github.com/creationix/nvm.git
     dest: "{{ ansible_env.HOME }}/.nvm"
   when: ansible_os_family == 'Debian'
+  tags:
+    - skip_ci

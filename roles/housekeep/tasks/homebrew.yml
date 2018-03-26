@@ -2,7 +2,11 @@
 - name: brew update
   homebrew:
     update_homebrew: yes
+  tags:
+    - update
 
 - name: brew upgrade
   homebrew:
     upgrade: yes
+  tags:
+    - update
