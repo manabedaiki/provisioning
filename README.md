@@ -1,5 +1,7 @@
 # provisioning
 
+[![Build Status](https://travis-ci.org/manabedaiki/provisioning.svg?branch=master)](https://travis-ci.org/manabedaiki/provisioning)
+
 Automate the provisioning using [Ansible](https://www.ansible.com).
 
 ## Requirements
