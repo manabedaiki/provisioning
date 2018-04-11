@@ -29,6 +29,7 @@ fi
 zplug hlissner/zsh-autopair, defer:2
 zplug junegunn/fzf-bin, as:command, from:gh-r, rename-to:fzf
 zplug junegunn/fzf, as:command, use:bin/fzf-tmux
+zplug momo-lab/zsh-abbrev-alias
 zplug zsh-users/zsh-autosuggestions
 zplug zsh-users/zsh-syntax-highlighting
 
@@ -36,6 +37,11 @@ zplug check --verbose || zplug install
 zplug load
 
 . ~/.aliases
+
+# abbrev-alias
+abbrev-alias -g G='| grep --color=yes -n'
+abbrev-alias -g L='| less'
+abbrev-alias -g X='| xargs'
 
 # key binding
 autoload -Uz cd-autodot
