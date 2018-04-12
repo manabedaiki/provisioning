@@ -7,10 +7,7 @@ set -u
     echo $'NAME\tDRIVER\tSCOPE'
     docker volume ls --format=$'{{.Name}}\t{{.Driver}}\t{{.Scope}}'
 } | column -ts $'\t' | fzf \
-    --no-sort \
-    --reverse \
     --header-lines=1 \
-    --ansi \
     --bind="\
 enter:execute(docker volume inspect \$(cut -d ' ' -f 1 <<<{}) | jq -C . | less),\
 ctrl-d:execute-silent(docker volume rm \$(cut -d ' ' -f 1 <<<{}))"

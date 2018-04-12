@@ -11,10 +11,6 @@ _find_opt_type=
 while _output=$(
         command find -L "$PWD" -type d -name .git -prune "${_find_opts[@]}" -print0 2>/dev/null \
         | fzf \
-            --no-sort \
-            --no-mouse \
-            --reverse \
-            --ansi \
             --preview="preview '{}' $((LINES - 2))" \
             --query="${_query:-}" \
             --print-query \

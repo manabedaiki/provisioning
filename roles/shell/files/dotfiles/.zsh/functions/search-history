@@ -1,10 +1,6 @@
 BUFFER=$(
     history -nr 1 \
     | fzf \
-        --no-sort \
-        --no-mouse \
-        --reverse \
-        --ansi \
         --query="$LBUFFER")
 if (($? != 0)); then
     return
