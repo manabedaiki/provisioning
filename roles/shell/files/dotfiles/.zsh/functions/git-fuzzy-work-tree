@@ -1,0 +1,30 @@
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return 1
+
+git -c color.status=always status --short --branch --untracked-files=all --ignore-submodules=all | fzf \
+    --header='enter: diff | C-s: stage | C-u: unstage | C-r: discard' \
+    --header-lines=1 \
+    --preview='
+            local _path={}
+            _path=${_path#???}
+            git diff --color=always -- "$_path"
+        ' \
+    --bind='enter:execute(
+            local _path={}
+            _path=${_path#???}
+            git diff --color=always -- "$_path"
+        )' \
+    --bind='ctrl-s:execute-silent(
+            local _path={}
+            _path=${_path#???}
+            git add -- "$_path"
+        )' \
+    --bind='ctrl-u:execute-silent(
+            local _path={}
+            _path=${_path#???}
+            git reset -- "$_path"
+        )' \
+    --bind='ctrl-r:execute-silent(
+            local _path={}
+            _path=${_path#???}
+            git checkout HEAD -- "$_path"
+        )'

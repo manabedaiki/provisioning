@@ -11,34 +11,6 @@ alias d='git diff'
 alias s='git status --short --branch'
 alias g='git graph'
 
-function git-history()
-{
-    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        return 1
-    fi
-    git log --graph --color --all --date-order --decorate --oneline | fzf \
-        --no-sort \
-        --reverse \
-        --ansi \
-        --preview="grep -qE ' [0-9a-f]+' <<<{} && git show --color=always \$(sed 's/^[* |\]*\([0-9a-f]*\).*/\1/' <<<{}) | head -n $((LINES - 2))" \
-        --bind="enter:execute(grep -qE ' [0-9a-f]+' <<<{} && git show --color=always \$(sed 's/^[* |\]*\([0-9a-f]*\).*/\1/' <<<{}))"
-}
-
-function git-working-tree()
-{
-    git status --short --branch --untracked-files=all --ignore-submodules=all | fzf \
-        --no-sort \
-        --reverse \
-        --header-lines=1 \
-        --ansi \
-        --preview="git diff --color=always -- \"\$(sed 's/^...//' <<<{})\" | head -n $((LINES - 2))" \
-        --bind="ctrl-s:execute-silent(git add -- \$(sed 's/^...//' <<<{}))" \
-        --bind="ctrl-u:execute-silent(git reset -- \$(sed 's/^...//' <<<{}))" \
-        --bind="ctrl-r:execute-silent(git checkout HEAD -- \$(sed 's/^...//' <<<{}))" \
-        --bind="ctrl-d:execute(git diff --color=always -- \$(sed 's/^...//' <<<{}))" \
-        --bind="enter:abort"
-}
-
 # docker
 function docker-dashboard()
 {
