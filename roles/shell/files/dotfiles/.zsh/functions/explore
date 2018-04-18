@@ -1,25 +1,23 @@
 local _find_opts
 local _find_opt_type
-local _output
 local _query
-local _name
 local _key
+local _name
 
 _find_opts=(-o)
 _find_opt_type=
 
-while _output=$(
-        command find -L "$PWD" -type d -name .git -prune "${_find_opts[@]}" -print0 2>/dev/null \
-        | fzf \
-            --preview="preview '{}' $((LINES - 2))" \
-            --query="${_query:-}" \
-            --print-query \
-            --expect=ctrl-d,ctrl-f,ctrl-c,ctrl-v,enter \
-            --read0)
+while {
+    read -r _query
+    read -r _key
+    read -r _name
+} < <(find -L "$PWD" -type d -name .git -prune "${_find_opts[@]}" -print0 2>/dev/null | fzf \
+        --preview="preview '{}' $((LINES - 2))" \
+        --query="${_query:-}" \
+        --print-query \
+        --expect=ctrl-d,ctrl-f,ctrl-c,ctrl-v,enter \
+        --read0)
 do
-    _query=$(head -n 1 <<<"$_output")
-    _name=$(head -n 3 <<<"$_output" | tail -n 1)
-    _key=$(head -n 2 <<<"$_output" | tail -n 1)
     case "$_key" in
         ctrl-d)
             if [ "$_find_opt_type" = 'd' ]; then
@@ -41,23 +39,23 @@ do
             ;;
         ctrl-c)
             if [ -d "$_name" ]; then
-                BUFFER="cd ${(q)_name}"
+                BUFFER=" cd ${(q)_name}"
             else
-                BUFFER="cd ${(q)_name%/*}"
+                BUFFER=" cd ${(q)_name%/*}"
             fi
             zle accept-line
             return
             ;;
         ctrl-v)
-            BUFFER="vi ${(q)_name}"
+            BUFFER=" vi ${(q)_name}"
             zle accept-line
             return
             ;;
         enter)
             if [ -d "$_name" ]; then
-                BUFFER="cd ${(q)_name}"
+                BUFFER=" cd ${(q)_name}"
             else
-                BUFFER="vi ${(q)_name}"
+                BUFFER=" vi ${(q)_name}"
             fi
             zle accept-line
             return
