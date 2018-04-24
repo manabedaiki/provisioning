@@ -12,9 +12,7 @@ setopt share_history
 
 function zshaddhistory()
 {
-    if ((${#1} < 4)); then
-        return 1
-    fi
+    (( $#1 > 3 ))
 }
 
 # powerline
