@@ -6,9 +6,6 @@
     dest: /usr/local/bin
     mode: 0555
   with_items:
-    - __fzf-docker-container
-    - __fzf-docker-image
-    - __fzf-docker-volume
     - argparse
     - git-foreach
     - preview

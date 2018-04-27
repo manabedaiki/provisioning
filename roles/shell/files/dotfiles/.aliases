@@ -61,7 +61,7 @@ alias l='ls -lF'
 alias ll='ls -alF'
 
 # explore
-function explore-github()
+function explore-source()
 {
     PWD=$HOME/dev/src explore
 }

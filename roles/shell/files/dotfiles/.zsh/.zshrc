@@ -43,35 +43,32 @@ abbrev-alias -g L='| less'
 abbrev-alias -g X='| xargs'
 
 # key binding
-autoload -Uz cd-autodot
 autoload -Uz cd-up
+autoload -Uz docker-fuzzy-container
+autoload -Uz docker-fuzzy-image
 autoload -Uz explore
 autoload -Uz git-fuzzy-branch
 autoload -Uz git-fuzzy-log
 autoload -Uz git-fuzzy-work-tree
 autoload -Uz search-history
-autoload -Uz edit-command-line
+zle -N cd-up
+zle -N docker-fuzzy-container
+zle -N docker-fuzzy-image
+zle -N explore
+zle -N explore-source
 zle -N git-fuzzy-branch
 zle -N git-fuzzy-log
 zle -N git-fuzzy-work-tree
-zle -N cd-autodot
-zle -N cd-up
-zle -N docker-dashboard
-zle -N explore
-zle -N explore-github
 zle -N search-history
-zle -N edit-command-line
+bindkey '^^' cd-up
+bindkey '^e^v' docker-fuzzy-container
+bindkey '^e^i' docker-fuzzy-image
+bindkey '^e^e' explore
+bindkey '^e^g' explore-source
 bindkey '^g^r' git-fuzzy-branch
 bindkey '^g^g' git-fuzzy-log
 bindkey '^g^w' git-fuzzy-work-tree
-bindkey '.' cd-autodot
-bindkey '^^' cd-up
-bindkey '^e^v' docker-dashboard
-bindkey '^e^e' explore
-bindkey '^e^g' explore-github
 bindkey '^r' search-history
-bindkey '^xe' edit-command-line
-bindkey '^x^e' edit-command-line
 
 # load user configuration
 if [ -f ~/.local/.usershell ]; then

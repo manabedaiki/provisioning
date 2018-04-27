@@ -1,24 +1,32 @@
-local _find_opts
-local _find_opt_type
+local _find_opts=(-o)
+local _find_opt_type=
+local _accept=1
 local _query
 local _key
 local _name
 
-_find_opts=(-o)
-_find_opt_type=
-
 while {
-    read -r _query
-    read -r _key
-    read -r _name
+    IFS= read -r _query
+    IFS= read -r _key
+    IFS= read -r _name
 } < <(find -L "$PWD" -type d -name .git -prune "${_find_opts[@]}" -print0 2>/dev/null | fzf \
-        --preview="preview '{}' $((LINES - 2))" \
-        --query="${_query:-}" \
-        --print-query \
-        --expect=ctrl-d,ctrl-f,ctrl-c,ctrl-v,enter \
-        --read0)
+    --header='enter: cd | C-d: show dirs | C-f: show files | C-v: vi | C-i: inline select | C-l: reload | C-x: toggle dry-run' \
+    --preview="preview '{}' $((LINES - 2))" \
+    --query="${_query:-}" \
+    --print-query \
+    --bind='ctrl-v:execute(vi {} </dev/tty >/dev/tty)' \
+    --expect='enter,ctrl-d,ctrl-f,ctrl-i,ctrl-l,ctrl-x' \
+    --read0
+)
 do
     case "$_key" in
+        enter)
+            if [ -d "$_name" ]; then
+                BUFFER=" cd ${(q)_name}"
+            else
+                BUFFER=" cd ${(q)_name%/*}"
+            fi
+            ;;
         ctrl-d)
             if [ "$_find_opt_type" = 'd' ]; then
                 _find_opt_type=
@@ -27,6 +35,7 @@ do
                 _find_opt_type='d'
                 _find_opts=(-o -type d)
             fi
+            continue
             ;;
         ctrl-f)
             if [ "$_find_opt_type" = 'f' ]; then
@@ -36,29 +45,25 @@ do
                 _find_opt_type='f'
                 _find_opts=(-o -type f)
             fi
+            continue
             ;;
-        ctrl-c)
-            if [ -d "$_name" ]; then
-                BUFFER=" cd ${(q)_name}"
-            else
-                BUFFER=" cd ${(q)_name%/*}"
-            fi
-            zle accept-line
+        ctrl-i)
+            LBUFFER+=$_name
             return
             ;;
-        ctrl-v)
-            BUFFER=" vi ${(q)_name}"
-            zle accept-line
-            return
+        ctrl-l)
+            continue
             ;;
-        enter)
-            if [ -d "$_name" ]; then
-                BUFFER=" cd ${(q)_name}"
-            else
-                BUFFER=" vi ${(q)_name}"
-            fi
-            zle accept-line
-            return
+        ctrl-x)
+            _accept=$(( 1 - _accept ))
+            continue
             ;;
     esac
+
+    if (( _accept )); then
+        zle accept-line
+    else
+        CURSOR=$#BUFFER
+    fi
+    return
 done
