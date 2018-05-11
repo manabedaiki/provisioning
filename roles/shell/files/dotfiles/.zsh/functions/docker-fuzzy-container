@@ -33,7 +33,7 @@ do
             BUFFER=" docker container rm --force $_id"
             ;;
         ctrl-i)
-            LBUFFER=$_id
+            LBUFFER+=$_id
             return
             ;;
         ctrl-l)
