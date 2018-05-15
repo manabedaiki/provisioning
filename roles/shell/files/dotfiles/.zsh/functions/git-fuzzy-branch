@@ -11,10 +11,10 @@ while {
     IFS= read -r _key
     IFS= read -r _branch
 } < <(git branch --all --color=always | grep --color=yes -vE '(^|/)HEAD' | fzf \
-    --header='enter: checkout | C-d: delete | C-p: push | C-i: inline select | C-l: reload | C-x: toggle dry-run' \
+    --header='enter: checkout | C-n: create | C-d: delete | C-p: push | C-i: inline select | C-l: reload | C-x: toggle dry-run' \
     --query=$_query \
     --print-query \
-    --expect='enter,ctrl-d,ctrl-p,ctrl-i,ctrl-l,ctrl-x'
+    --expect='enter,ctrl-n,ctrl-d,ctrl-p,ctrl-i,ctrl-l,ctrl-x'
 )
 do
     _branch=${_branch% -> *}
@@ -33,6 +33,10 @@ do
             ;;
         enter:local)
             BUFFER=" git checkout $_branch"
+            ;;
+        ctrl-n:*)
+            BUFFER=" git checkout -b "
+            _accept=0
             ;;
         ctrl-d:remote)
             BUFFER=" git push ${_branch%%/*} :${_branch#*/}"
