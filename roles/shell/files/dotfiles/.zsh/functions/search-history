@@ -1,9 +1,0 @@
-BUFFER=$(
-    history -nr 1 \
-    | fzf \
-        --query="$LBUFFER")
-if (($? != 0)); then
-    return
-fi
-CURSOR=$#BUFFER
-zle accept-line
