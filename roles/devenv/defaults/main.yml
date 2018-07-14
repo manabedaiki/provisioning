@@ -1,6 +1,3 @@
 ---
-install_drone: no
 install_fonts: no
-install_go: no
 install_node: no
-install_python: no

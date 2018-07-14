@@ -4,6 +4,6 @@
   pip:
     name: "{{ item }}"
     executable: "{{ which_pip }}"
-    extra_args: --no-cache-dir
+    extra_args: --no-cache-dir --upgrade
   with_items:
     - pygments

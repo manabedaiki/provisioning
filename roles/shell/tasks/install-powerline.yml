@@ -4,4 +4,4 @@
   pip:
     name: powerline-status
     executable: "{{ which_pip }}"
-    extra_args: --no-cache-dir
+    extra_args: --no-cache-dir --upgrade

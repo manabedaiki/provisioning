@@ -1,3 +1,0 @@
----
-drone_tar_gz: http://downloads.drone.io/release/linux/amd64/drone.tar.gz
-go_package_name: golang
