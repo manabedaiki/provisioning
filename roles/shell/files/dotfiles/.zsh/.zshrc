@@ -40,7 +40,25 @@ zplug load
 # abbrev-alias
 abbrev-alias -g G='| grep --color=yes -n'
 abbrev-alias -g L='| less'
+
 abbrev-alias -g X='| xargs'
+abbrev-alias -g X0='| xargs -0'
+abbrev-alias -g XG='| xargs grep --color=yes -n'
+abbrev-alias -g X0G='| xargs -0 grep --color=yes -n'
+
+abbrev-alias -g FF='find . -type f -name'
+abbrev-alias -g FD='find . -type d -name'
+abbrev-alias -g FG='find . -type d -name .git -prune -o -print'
+abbrev-alias -g FGN='find . -type d \( -name .git -o -name node_modules \) -prune -o -print'
+
+abbrev-alias -g HJ="-H 'Content-Type: application/json'"
+abbrev-alias -g HL='127.0.0.1'
+
+abbrev-alias -g _POST="-X POST -H 'Content-Type: application/json' -d"
+abbrev-alias -g _PUT="-X PUT -H 'Content-Type: application/json' -d"
+abbrev-alias -g _DELETE="-X DELETE"
+
+abbrev-alias -g F='| fzf'
 
 # key binding
 autoload -Uz cd-up
