@@ -14,3 +14,4 @@
   git:
     repo: https://github.com/zplug/zplug.git
     dest: "{{ ansible_env.HOME }}/.zsh/.zplug"
+    version: master
