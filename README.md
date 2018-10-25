@@ -16,3 +16,14 @@ Ansible requires ssh access and python.
 # in Debian
 apt-get install --yes openssh-server python
 ```
+
+## Docker
+
+```sh
+ssh-keygen -t ed25519 -N '' -f id-ed25519
+docker-compose up -d
+```
+
+```sh
+ssh tsuru@localhost -p 22022 -i ./id-ed25519
+```

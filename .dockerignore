@@ -1,0 +1,11 @@
+.git
+tests
+.dockerignore
+.gitignore
+.travis.yml
+docker-compose.yml
+Dockerfile
+id-ed25519
+id-ed25519.pub
+Makefile
+README.md

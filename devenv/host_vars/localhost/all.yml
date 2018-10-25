@@ -1,0 +1,4 @@
+---
+ansible_become_pass: jail
+user: tsuru
+which_pip: /usr/bin/pip

@@ -7,7 +7,7 @@
 - name: change login shell to zsh
   become: yes
   user:
-    name: "{{ ansible_env.USER }}"
+    name: "{{ user | default(ansible_env.USER) }}"
     shell: "{{ which_zsh }}"
 
 - name: install zplug
