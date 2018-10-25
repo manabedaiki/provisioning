@@ -1,8 +1,0 @@
----
-install_dropbox: yes
-dropbox:
-  - name: default
-    configuration: /tmp/.dropbox
-    mountpoint: /tmp/dropbox
-    uid: 1000
-    gid: 1000

@@ -1,6 +1,0 @@
----
-install_drone: yes
-install_fonts: yes
-install_go: yes
-install_node: yes
-install_python: yes

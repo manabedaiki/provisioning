@@ -1,6 +1,7 @@
 # provisioning
 
-[![Build Status](https://travis-ci.org/manabedaiki/provisioning.svg?branch=master)](https://travis-ci.org/manabedaiki/provisioning)
+![build status](https://img.shields.io/docker/build/manabedaiki/devenv.svg)
+![automated build](https://img.shields.io/docker/automated/manabedaiki/devenv.svg)
 
 Automate the provisioning using [Ansible](https://www.ansible.com).
 

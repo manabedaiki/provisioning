@@ -4,8 +4,6 @@
     src: "~/.ssh/{{ ssh_authorized_keys }}.pub"
     dest: "{{ ansible_env.HOME }}/.ssh/authorized_keys"
     mode: 0400
-  tags:
-    - skip_ci
 
 - name: change listen port
   become: yes
