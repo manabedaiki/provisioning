@@ -2,12 +2,11 @@
 - name: install docker dependencies
   become: yes
   apt:
-    name: "{{ item }}"
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - curl
-    - software-properties-common
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
 
 - name: install GPG key
   become: yes
