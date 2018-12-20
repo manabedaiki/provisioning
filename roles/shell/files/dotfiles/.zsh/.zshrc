@@ -70,6 +70,7 @@ autoload -Uz git-fuzzy-branch
 autoload -Uz git-fuzzy-log
 autoload -Uz git-fuzzy-work-tree
 autoload -Uz fuzzy-history
+autoload -Uz fuzzy-npm
 zle -N cd-up
 zle -N docker-fuzzy-container
 zle -N docker-fuzzy-image
@@ -79,6 +80,7 @@ zle -N git-fuzzy-branch
 zle -N git-fuzzy-log
 zle -N git-fuzzy-work-tree
 zle -N fuzzy-history
+zle -N fuzzy-npm
 bindkey '^^' cd-up
 bindkey '^e^v' docker-fuzzy-container
 bindkey '^e^i' docker-fuzzy-image
@@ -87,6 +89,7 @@ bindkey '^e^g' explore-source
 bindkey '^g^r' git-fuzzy-branch
 bindkey '^g^g' git-fuzzy-log
 bindkey '^g^w' git-fuzzy-work-tree
+bindkey '^g^n' fuzzy-npm
 bindkey '^r' fuzzy-history
 
 # load user configuration
